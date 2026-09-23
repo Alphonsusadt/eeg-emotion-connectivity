@@ -141,7 +141,12 @@ DATASET (D:\Skripsi\dataset\SEED)
 └──────────┬───────────────────┘
            ▼
 ┌──────────────────────────────┐
-│  phase_6_deep_learning       │  GCN, GAT, CNN, LSTM, Transformer
+│  phase_6_wearable_evaluation │  Streaming simulation, windowed features
+│  Real-world simulation       │  Cross-session, calibration length
+└──────────┬───────────────────┘
+           ▼
+┌──────────────────────────────┐
+│  phase_7_deep_learning       │  GCN, GAT, CNN, LSTM, Transformer
 │  Graph neural networks       │  Late Fusion (dual-branch GCN)
 │  Separate + Fusion           │  LOSO untuk DL
 └──────────────────────────────┘
@@ -282,15 +287,26 @@ D:\Skripsi\new_data\
 │   └── figures\
 │
 │
-└── phase_6_deep_learning\                 # Phase 6: Deep Learning
+├── phase_6_wearable_evaluation\             # Phase 6: Simulasi Wearable & Streaming
+│   ├── code\
+│   ├── 6.0_protocol_definition\
+│   ├── 6.1_windowed_feature_extraction\
+│   ├── 6.2_windowed_baseline\
+│   ├── 6.3_calibration_length\
+│   ├── 6.4_cross_session\
+│   ├── 6.5_streaming_normalization\
+│   ├── 6.6_session_reliability\
+│   └── 6.7_final_analysis\
+│
+└── phase_7_deep_learning\                 # Phase 7: Deep Learning
     ├── code\
-    │   └── phase6_deep_learning.ipynb
-    ├── 6.1_separate_branch\              #   GCN, GAT, CNN, LSTM (GC vs PDC terpisah)
-    ├── 6.2_late_fusion\                  #   Dual-branch GCN (GC + PDC)
-    ├── 6.3_multi_channel\               #   CNN 2-channel input
-    ├── 6.4_transformer\                  #   Self-attention
-    ├── 6.5_evaluation\                   #   Tabel perbandingan semua arsitektur
-    ├── 6.6_loso_dl\                      #   LOSO untuk model DL terbaik
+    │   └── phase7_deep_learning.ipynb
+    ├── 7.1_separate_branch\              #   GCN, GAT, CNN, LSTM (GC vs PDC terpisah)
+    ├── 7.2_late_fusion\                  #   Dual-branch GCN (GC + PDC)
+    ├── 7.3_multi_channel\               #   CNN 2-channel input
+    ├── 7.4_transformer\                  #   Self-attention
+    ├── 7.5_evaluation\                   #   Tabel perbandingan semua arsitektur
+    ├── 7.6_loso_dl\                      #   LOSO untuk model DL terbaik
     ├── models\                           #   Saved model weights
     └── figures\
 ```
@@ -336,7 +352,8 @@ D:\Skripsi\new_data\
 6.  phase_3_feature_engineering/code/*.ipynb       # ~1 jam
 7.  phase_4_classification/code/*.ipynb            # ~3 jam
 8.  phase_5_loso/code/*.ipynb                      # ~3 jam
-9.  phase_6_deep_learning/code/*.ipynb             # ~1 hari
+9.  phase_6_wearable_evaluation/code/*.ipynb       # ~4 jam
+10. phase_7_deep_learning/code/*.ipynb             # ~1 hari
 ```
 
 ---
