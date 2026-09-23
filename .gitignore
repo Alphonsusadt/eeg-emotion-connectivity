@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# -------------------------------------------------------------
+# Project-Specific Exclusions (Sangat Penting untuk Skripsi ini)
+# -------------------------------------------------------------
+
+# 1. Heavy Data & Intermediate Matrices (.npy files are huge!)
+# Folder output ini bisa berukuran bergiga-giga, jangan di-push ke GitHub
+00_preprocessing/output/
+01_granger_causality/output/gc_matrices/
+02_pdc/output/pdc_matrices/
+*.npy
+
+# 2. Saved Models & Weights
+# File model deep learning / ML biasanya sangat besar
+phase_6_deep_learning/models/
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.pkl
+*.joblib
+*.sav
+
+# 3. CSV Data Files
+# Jika CSV-nya kecil dan ingin ditunjukkan sebagai contoh, Anda bisa hapus baris ini nanti.
+# Namun defaultnya lebih baik diabaikan agar riwayat commit tidak berat.
+*.csv
+# phase_1_data_structuring/csv/
+# phase_3_feature_engineering/csv/
+
+# 4. Gambar / Visualisasi hasil plotting (Opsional)
+# Uncomment baris di bawah jika tidak ingin mengupload folder figures yang dihasilkan secara otomatis
+# */figures/
+# *.png
+# *.jpg
+# *.pdf
+# *.svg

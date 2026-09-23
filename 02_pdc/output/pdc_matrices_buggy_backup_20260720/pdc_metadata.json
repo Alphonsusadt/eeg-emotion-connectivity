@@ -1,0 +1,265 @@
+{
+  "fs": 100,
+  "subjects": {
+    "subject_01": {
+      "session_20131027": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131030": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131107": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_02": {
+      "session_20140404": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140413": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140419": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_03": {
+      "session_20140603": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140611": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140629": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_04": {
+      "session_20140621": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140702": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140705": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_05": {
+      "session_20140411": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140418": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140506": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_06": {
+      "session_20130712": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131016": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131113": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_07": {
+      "session_20131027": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131030": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131106": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_08": {
+      "session_20140511": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140514": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140521": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_09": {
+      "session_20140620": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140627": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140704": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_10": {
+      "session_20131130": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131204": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131211": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_11": {
+      "session_20140618": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140625": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140630": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_12": {
+      "session_20131127": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131201": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20131207": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_13": {
+      "session_20140527": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140603": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140610": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_14": {
+      "session_20140601": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140615": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      },
+      "session_20140627": {
+        "n_trials": 15,
+        "mean_order": 14.5,
+        "time_s": 0.0
+      }
+    },
+    "subject_15": {
+      "session_20130709": {
+        "n_trials": 15,
+        "mean_order": 14.6,
+        "time_s": 208.2
+      },
+      "session_20131016": {
+        "n_trials": 15,
+        "mean_order": 14.2,
+        "time_s": 208.3
+      },
+      "session_20131105": {
+        "n_trials": 15,
+        "mean_order": 14.2,
+        "time_s": 193.8
+      }
+    }
+  },
+  "timing": {},
+  "total_trials": 675,
+  "total_time_s": 610.2,
+  "total_time_min": 10.2,
+  "overall_mean_order": 14.333333333333334
+}

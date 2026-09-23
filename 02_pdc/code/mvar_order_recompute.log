@@ -1,0 +1,774 @@
+Input Notebook:  mvar_order_recompute.ipynb
+Output Notebook: mvar_order_recompute.ipynb
+Executing:   0%|          | 0/50 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+Executing:   2%|2         | 1/50 [00:02<02:25,  2.97s/cell]Executing Cell 2---------------------------------------
+Resuming from existing D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+Setup OK. META_PATH = D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 2------------------------------------------
+Executing:   4%|4         | 2/50 [00:23<10:27, 13.08s/cell]Executing Cell 3---------------------------------------
+  [SKIP already done] subject_01/session_20131027
+
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+  [SKIP already done] subject_01/session_20131030
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+  [SKIP already done] subject_01/session_20131107
+
+Ending Cell 5------------------------------------------
+Executing:  10%|#         | 5/50 [00:23<02:48,  3.74s/cell]Executing Cell 6---------------------------------------
+  [SKIP already done] subject_02/session_20140404
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+  [SKIP already done] subject_02/session_20140413
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+  [SKIP already done] subject_02/session_20140419
+
+Ending Cell 8------------------------------------------
+Executing:  16%|#6        | 8/50 [00:23<01:18,  1.87s/cell]Executing Cell 9---------------------------------------
+  [SKIP already done] subject_03/session_20140603
+
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+  [SKIP already done] subject_03/session_20140611
+
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+  [SKIP already done] subject_03/session_20140629
+
+
+Ending Cell 11-----------------------------------------
+Executing:  22%|##2       | 11/50 [00:23<00:43,  1.11s/cell]Executing Cell 12--------------------------------------
+  [SKIP already done] subject_04/session_20140621
+
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+  [SKIP already done] subject_04/session_20140702
+
+Ending Cell 13-----------------------------------------
+Executing:  26%|##6       | 13/50 [00:23<00:29,  1.24cell/s]Executing Cell 14--------------------------------------
+  [SKIP already done] subject_04/session_20140705
+
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+  [SKIP already done] subject_05/session_20140411
+
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+  [SKIP already done] subject_05/session_20140418
+
+Ending Cell 16-----------------------------------------
+Executing:  32%|###2      | 16/50 [00:23<00:17,  1.93cell/s]Executing Cell 17--------------------------------------
+  [SKIP already done] subject_05/session_20140506
+
+Ending Cell 17-----------------------------------------
+Executing Cell 18--------------------------------------
+  [SKIP already done] subject_06/session_20130712
+
+
+Ending Cell 18-----------------------------------------
+Executing Cell 19--------------------------------------
+  [SKIP already done] subject_06/session_20131016
+
+Ending Cell 19-----------------------------------------
+Executing:  38%|###8      | 19/50 [00:23<00:10,  2.83cell/s]Executing Cell 20--------------------------------------
+  [SKIP already done] subject_06/session_20131113
+
+Ending Cell 20-----------------------------------------
+Executing Cell 21--------------------------------------
+  [SKIP already done] subject_07/session_20131027
+
+Ending Cell 21-----------------------------------------
+Executing:  42%|####2     | 21/50 [00:24<00:08,  3.58cell/s]Executing Cell 22--------------------------------------
+  [SKIP already done] subject_07/session_20131030
+
+Ending Cell 22-----------------------------------------
+Executing Cell 23--------------------------------------
+  [SKIP already done] subject_07/session_20131106
+
+Ending Cell 23-----------------------------------------
+Executing:  46%|####6     | 23/50 [00:24<00:06,  4.43cell/s]Executing Cell 24--------------------------------------
+  [SKIP already done] subject_08/session_20140511
+
+Ending Cell 24-----------------------------------------
+Executing Cell 25--------------------------------------
+  [SKIP already done] subject_08/session_20140514
+
+Ending Cell 25-----------------------------------------
+Executing:  50%|#####     | 25/50 [00:24<00:04,  5.59cell/s]Executing Cell 26--------------------------------------
+  [SKIP already done] subject_08/session_20140521
+
+Ending Cell 26-----------------------------------------
+Executing Cell 27--------------------------------------
+  [SKIP already done] subject_09/session_20140620
+
+Ending Cell 27-----------------------------------------
+Executing:  54%|#####4    | 27/50 [00:24<00:03,  6.94cell/s]Executing Cell 28--------------------------------------
+  [SKIP already done] subject_09/session_20140627
+
+Ending Cell 28-----------------------------------------
+Executing Cell 29--------------------------------------
+Executing:  56%|#####6    | 28/50 [00:40<00:03,  6.94cell/s]    trial_01.npy: order=15 (24s elapsed)
+
+    trial_02.npy: order=15 (44s elapsed)
+
+    trial_03.npy: order=14 (62s elapsed)
+
+    trial_04.npy: order=15 (83s elapsed)
+
+    trial_05.npy: order=15 (100s elapsed)
+
+    trial_06.npy: order=14 (118s elapsed)
+
+    trial_07.npy: order=15 (138s elapsed)
+
+    trial_08.npy: order=14 (153s elapsed)
+
+    trial_09.npy: order=15 (170s elapsed)
+
+    trial_10.npy: order=14 (192s elapsed)
+
+    trial_11.npy: order=14 (213s elapsed)
+
+    trial_12.npy: order=15 (235s elapsed)
+
+    trial_13.npy: order=15 (256s elapsed)
+
+    trial_14.npy: order=15 (278s elapsed)
+
+    trial_15.npy: order=15 (297s elapsed)
+  DONE subject_09/session_20140704: 15 trials, mean_order=14.67, 298s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 29-----------------------------------------
+Executing:  58%|#####8    | 29/50 [05:22<14:57, 42.74s/cell]Executing Cell 30--------------------------------------
+    trial_01.npy: order=14 (21s elapsed)
+
+    trial_02.npy: order=14 (42s elapsed)
+
+    trial_03.npy: order=14 (61s elapsed)
+
+    trial_04.npy: order=15 (82s elapsed)
+
+    trial_05.npy: order=14 (99s elapsed)
+
+    trial_06.npy: order=14 (117s elapsed)
+
+    trial_07.npy: order=14 (137s elapsed)
+
+    trial_08.npy: order=14 (157s elapsed)
+
+    trial_09.npy: order=15 (177s elapsed)
+
+    trial_10.npy: order=14 (194s elapsed)
+
+    trial_11.npy: order=14 (211s elapsed)
+
+    trial_12.npy: order=14 (228s elapsed)
+
+    trial_13.npy: order=14 (244s elapsed)
+
+    trial_14.npy: order=14 (261s elapsed)
+
+    trial_15.npy: order=14 (277s elapsed)
+  DONE subject_10/session_20131130: 15 trials, mean_order=14.13, 277s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 30-----------------------------------------
+Executing:  60%|######    | 30/50 [09:58<27:29, 82.49s/cell]Executing Cell 31--------------------------------------
+    trial_01.npy: order=14 (17s elapsed)
+
+    trial_02.npy: order=14 (34s elapsed)
+
+    trial_03.npy: order=14 (50s elapsed)
+
+    trial_04.npy: order=14 (67s elapsed)
+
+    trial_05.npy: order=14 (81s elapsed)
+
+    trial_06.npy: order=14 (95s elapsed)
+
+    trial_07.npy: order=14 (112s elapsed)
+
+    trial_08.npy: order=14 (128s elapsed)
+
+    trial_09.npy: order=15 (147s elapsed)
+
+    trial_10.npy: order=15 (164s elapsed)
+
+    trial_11.npy: order=14 (181s elapsed)
+
+    trial_12.npy: order=14 (198s elapsed)
+
+    trial_13.npy: order=14 (215s elapsed)
+
+    trial_14.npy: order=15 (232s elapsed)
+
+    trial_15.npy: order=15 (248s elapsed)
+  DONE subject_10/session_20131204: 15 trials, mean_order=14.27, 248s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 31-----------------------------------------
+Executing:  62%|######2   | 31/50 [14:06<36:21, 114.81s/cell]Executing Cell 32--------------------------------------
+    trial_01.npy: order=14 (17s elapsed)
+
+    trial_02.npy: order=14 (34s elapsed)
+
+    trial_03.npy: order=14 (50s elapsed)
+
+    trial_04.npy: order=15 (67s elapsed)
+
+    trial_05.npy: order=14 (82s elapsed)
+
+    trial_06.npy: order=14 (96s elapsed)
+
+    trial_07.npy: order=15 (113s elapsed)
+
+    trial_08.npy: order=14 (129s elapsed)
+
+    trial_09.npy: order=14 (148s elapsed)
+
+    trial_10.npy: order=14 (165s elapsed)
+
+    trial_11.npy: order=14 (182s elapsed)
+
+    trial_12.npy: order=14 (198s elapsed)
+
+    trial_13.npy: order=14 (215s elapsed)
+
+    trial_14.npy: order=14 (232s elapsed)
+
+    trial_15.npy: order=14 (248s elapsed)
+  DONE subject_10/session_20131211: 15 trials, mean_order=14.13, 248s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 32-----------------------------------------
+Executing:  64%|######4   | 32/50 [18:14<43:08, 143.83s/cell]Executing Cell 33--------------------------------------
+    trial_01.npy: order=14 (17s elapsed)
+
+    trial_02.npy: order=14 (34s elapsed)
+
+    trial_03.npy: order=14 (49s elapsed)
+
+    trial_04.npy: order=14 (66s elapsed)
+
+    trial_05.npy: order=14 (80s elapsed)
+
+    trial_06.npy: order=14 (95s elapsed)
+
+    trial_07.npy: order=14 (112s elapsed)
+
+    trial_08.npy: order=14 (128s elapsed)
+
+    trial_09.npy: order=14 (146s elapsed)
+
+    trial_10.npy: order=15 (163s elapsed)
+
+    trial_11.npy: order=14 (180s elapsed)
+
+    trial_12.npy: order=14 (197s elapsed)
+
+    trial_13.npy: order=14 (214s elapsed)
+
+    trial_14.npy: order=15 (231s elapsed)
+
+    trial_15.npy: order=15 (246s elapsed)
+  DONE subject_11/session_20140618: 15 trials, mean_order=14.20, 246s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 33-----------------------------------------
+Executing:  66%|######6   | 33/50 [22:21<47:39, 168.21s/cell]Executing Cell 34--------------------------------------
+    trial_01.npy: order=14 (17s elapsed)
+
+    trial_02.npy: order=14 (34s elapsed)
+
+    trial_03.npy: order=14 (49s elapsed)
+
+    trial_04.npy: order=14 (67s elapsed)
+
+    trial_05.npy: order=14 (81s elapsed)
+
+    trial_06.npy: order=15 (95s elapsed)
+
+    trial_07.npy: order=15 (113s elapsed)
+
+    trial_08.npy: order=15 (128s elapsed)
+
+    trial_09.npy: order=15 (147s elapsed)
+
+    trial_10.npy: order=14 (164s elapsed)
+
+    trial_11.npy: order=14 (181s elapsed)
+
+    trial_12.npy: order=15 (198s elapsed)
+
+    trial_13.npy: order=15 (215s elapsed)
+
+    trial_14.npy: order=15 (232s elapsed)
+
+    trial_15.npy: order=15 (247s elapsed)
+  DONE subject_11/session_20140625: 15 trials, mean_order=14.53, 247s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 34-----------------------------------------
+Executing:  68%|######8   | 34/50 [26:28<50:12, 188.26s/cell]Executing Cell 35--------------------------------------
+    trial_01.npy: order=14 (17s elapsed)
+
+    trial_02.npy: order=14 (35s elapsed)
+
+    trial_03.npy: order=14 (50s elapsed)
+
+    trial_04.npy: order=15 (65s elapsed)
+
+    trial_05.npy: order=14 (82s elapsed)
+
+    trial_06.npy: order=14 (96s elapsed)
+
+    trial_07.npy: order=15 (113s elapsed)
+
+    trial_08.npy: order=15 (129s elapsed)
+
+    trial_09.npy: order=15 (151s elapsed)
+
+    trial_10.npy: order=15 (173s elapsed)
+
+    trial_11.npy: order=14 (194s elapsed)
+
+    trial_12.npy: order=15 (214s elapsed)
+
+    trial_13.npy: order=14 (238s elapsed)
+
+    trial_14.npy: order=15 (256s elapsed)
+
+    trial_15.npy: order=15 (272s elapsed)
+  DONE subject_11/session_20140630: 15 trials, mean_order=14.53, 272s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 35-----------------------------------------
+Executing:  70%|#######   | 35/50 [31:00<52:36, 210.44s/cell]Executing Cell 36--------------------------------------
+    trial_01.npy: order=15 (18s elapsed)
+
+    trial_02.npy: order=15 (36s elapsed)
+
+    trial_03.npy: order=15 (65s elapsed)
+
+    trial_04.npy: order=15 (102s elapsed)
+
+    trial_05.npy: order=15 (122s elapsed)
+
+    trial_06.npy: order=15 (141s elapsed)
+
+    trial_07.npy: order=15 (163s elapsed)
+
+    trial_08.npy: order=15 (183s elapsed)
+
+    trial_09.npy: order=15 (208s elapsed)
+
+    trial_10.npy: order=15 (233s elapsed)
+
+    trial_11.npy: order=15 (255s elapsed)
+
+    trial_12.npy: order=15 (278s elapsed)
+
+    trial_13.npy: order=15 (299s elapsed)
+
+    trial_14.npy: order=15 (321s elapsed)
+
+    trial_15.npy: order=15 (340s elapsed)
+  DONE subject_12/session_20131127: 15 trials, mean_order=15.00, 340s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 36-----------------------------------------
+Executing:  72%|#######2  | 36/50 [36:40<57:27, 246.21s/cell]Executing Cell 37--------------------------------------
+    trial_01.npy: order=14 (22s elapsed)
+
+    trial_02.npy: order=14 (42s elapsed)
+
+    trial_03.npy: order=14 (61s elapsed)
+
+    trial_04.npy: order=15 (83s elapsed)
+
+    trial_05.npy: order=14 (101s elapsed)
+
+    trial_06.npy: order=15 (120s elapsed)
+
+    trial_07.npy: order=14 (141s elapsed)
+
+    trial_08.npy: order=15 (161s elapsed)
+
+    trial_09.npy: order=15 (184s elapsed)
+
+    trial_10.npy: order=15 (205s elapsed)
+
+    trial_11.npy: order=15 (228s elapsed)
+
+    trial_12.npy: order=15 (250s elapsed)
+
+    trial_13.npy: order=15 (273s elapsed)
+
+    trial_14.npy: order=15 (295s elapsed)
+
+    trial_15.npy: order=15 (314s elapsed)
+  DONE subject_12/session_20131201: 15 trials, mean_order=14.67, 314s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 37-----------------------------------------
+Executing:  74%|#######4  | 37/50 [41:54<57:28, 265.28s/cell]Executing Cell 38--------------------------------------
+    trial_01.npy: order=14 (22s elapsed)
+
+    trial_02.npy: order=15 (43s elapsed)
+
+    trial_03.npy: order=15 (63s elapsed)
+
+    trial_04.npy: order=15 (83s elapsed)
+
+    trial_05.npy: order=15 (101s elapsed)
+
+    trial_06.npy: order=15 (119s elapsed)
+
+    trial_07.npy: order=15 (137s elapsed)
+
+    trial_08.npy: order=15 (152s elapsed)
+
+    trial_09.npy: order=15 (171s elapsed)
+
+    trial_10.npy: order=15 (188s elapsed)
+
+    trial_11.npy: order=15 (205s elapsed)
+
+    trial_12.npy: order=15 (223s elapsed)
+
+    trial_13.npy: order=15 (240s elapsed)
+
+    trial_14.npy: order=15 (257s elapsed)
+
+    trial_15.npy: order=15 (272s elapsed)
+  DONE subject_12/session_20131207: 15 trials, mean_order=14.93, 272s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 38-----------------------------------------
+Executing:  76%|#######6  | 38/50 [46:25<53:25, 267.11s/cell]Executing Cell 39--------------------------------------
+    trial_01.npy: order=15 (17s elapsed)
+
+    trial_02.npy: order=14 (34s elapsed)
+
+    trial_03.npy: order=14 (49s elapsed)
+
+    trial_04.npy: order=14 (66s elapsed)
+
+    trial_05.npy: order=14 (80s elapsed)
+
+    trial_06.npy: order=15 (94s elapsed)
+
+    trial_07.npy: order=14 (111s elapsed)
+
+    trial_08.npy: order=14 (127s elapsed)
+
+    trial_09.npy: order=15 (142s elapsed)
+
+    trial_10.npy: order=15 (162s elapsed)
+
+    trial_11.npy: order=15 (184s elapsed)
+
+    trial_12.npy: order=14 (207s elapsed)
+
+    trial_13.npy: order=15 (232s elapsed)
+
+    trial_14.npy: order=15 (257s elapsed)
+
+    trial_15.npy: order=14 (276s elapsed)
+  DONE subject_13/session_20140527: 15 trials, mean_order=14.47, 276s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 39-----------------------------------------
+Executing:  78%|#######8  | 39/50 [51:02<49:28, 269.86s/cell]Executing Cell 40--------------------------------------
+    trial_01.npy: order=15 (25s elapsed)
+
+    trial_02.npy: order=15 (47s elapsed)
+
+    trial_03.npy: order=14 (68s elapsed)
+
+    trial_04.npy: order=15 (93s elapsed)
+
+    trial_05.npy: order=14 (111s elapsed)
+
+    trial_06.npy: order=14 (131s elapsed)
+
+    trial_07.npy: order=15 (159s elapsed)
+
+    trial_08.npy: order=14 (183s elapsed)
+
+    trial_09.npy: order=15 (207s elapsed)
+
+    trial_10.npy: order=15 (224s elapsed)
+
+    trial_11.npy: order=14 (241s elapsed)
+
+    trial_12.npy: order=15 (258s elapsed)
+
+    trial_13.npy: order=15 (275s elapsed)
+
+    trial_14.npy: order=15 (293s elapsed)
+
+    trial_15.npy: order=15 (310s elapsed)
+  DONE subject_13/session_20140603: 15 trials, mean_order=14.67, 310s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 40-----------------------------------------
+Executing:  80%|########  | 40/50 [56:12<46:56, 281.65s/cell]Executing Cell 41--------------------------------------
+    trial_01.npy: order=15 (17s elapsed)
+
+    trial_02.npy: order=15 (35s elapsed)
+
+    trial_03.npy: order=15 (51s elapsed)
+
+    trial_04.npy: order=15 (68s elapsed)
+
+    trial_05.npy: order=14 (82s elapsed)
+
+    trial_06.npy: order=14 (97s elapsed)
+
+    trial_07.npy: order=15 (115s elapsed)
+
+    trial_08.npy: order=14 (131s elapsed)
+
+    trial_09.npy: order=15 (150s elapsed)
+
+    trial_10.npy: order=15 (168s elapsed)
+
+    trial_11.npy: order=15 (185s elapsed)
+
+    trial_12.npy: order=15 (203s elapsed)
+
+    trial_13.npy: order=14 (220s elapsed)
+
+    trial_14.npy: order=15 (238s elapsed)
+
+    trial_15.npy: order=15 (253s elapsed)
+  DONE subject_13/session_20140610: 15 trials, mean_order=14.73, 253s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 41-----------------------------------------
+Executing:  82%|########2 | 41/50 [1:00:25<40:58, 273.22s/cell]Executing Cell 42--------------------------------------
+    trial_01.npy: order=14 (17s elapsed)
+
+    trial_02.npy: order=14 (32s elapsed)
+
+    trial_03.npy: order=14 (44s elapsed)
+
+    trial_04.npy: order=14 (62s elapsed)
+
+    trial_05.npy: order=14 (79s elapsed)
+
+    trial_06.npy: order=15 (99s elapsed)
+
+    trial_07.npy: order=14 (122s elapsed)
+
+    trial_08.npy: order=14 (142s elapsed)
+
+    trial_09.npy: order=14 (166s elapsed)
+
+    trial_10.npy: order=14 (188s elapsed)
+
+    trial_11.npy: order=14 (209s elapsed)
+
+    trial_12.npy: order=14 (230s elapsed)
+
+    trial_13.npy: order=14 (251s elapsed)
+
+    trial_14.npy: order=15 (272s elapsed)
+
+    trial_15.npy: order=15 (293s elapsed)
+  DONE subject_14/session_20140601: 15 trials, mean_order=14.20, 293s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 42-----------------------------------------
+Executing:  84%|########4 | 42/50 [1:05:18<37:12, 279.07s/cell]Executing Cell 43--------------------------------------
+    trial_01.npy: order=14 (23s elapsed)
+
+    trial_02.npy: order=14 (45s elapsed)
+
+    trial_03.npy: order=14 (63s elapsed)
+
+    trial_04.npy: order=14 (81s elapsed)
+
+    trial_05.npy: order=14 (96s elapsed)
+
+    trial_06.npy: order=14 (110s elapsed)
+
+    trial_07.npy: order=14 (127s elapsed)
+
+    trial_08.npy: order=14 (144s elapsed)
+
+    trial_09.npy: order=14 (162s elapsed)
+
+    trial_10.npy: order=14 (181s elapsed)
+
+    trial_11.npy: order=14 (198s elapsed)
+
+    trial_12.npy: order=14 (215s elapsed)
+
+    trial_13.npy: order=14 (232s elapsed)
+
+    trial_14.npy: order=14 (247s elapsed)
+
+    trial_15.npy: order=15 (258s elapsed)
+  DONE subject_14/session_20140615: 15 trials, mean_order=14.07, 258s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 43-----------------------------------------
+Executing:  86%|########6 | 43/50 [1:09:36<31:49, 272.75s/cell]Executing Cell 44--------------------------------------
+    trial_01.npy: order=15 (19s elapsed)
+
+    trial_02.npy: order=14 (36s elapsed)
+
+    trial_03.npy: order=15 (51s elapsed)
+
+    trial_04.npy: order=14 (68s elapsed)
+
+    trial_05.npy: order=14 (80s elapsed)
+
+    trial_06.npy: order=15 (92s elapsed)
+
+    trial_07.npy: order=15 (113s elapsed)
+
+    trial_08.npy: order=14 (133s elapsed)
+
+    trial_09.npy: order=15 (156s elapsed)
+
+    trial_10.npy: order=14 (177s elapsed)
+
+    trial_11.npy: order=14 (197s elapsed)
+
+    trial_12.npy: order=15 (217s elapsed)
+
+    trial_13.npy: order=15 (238s elapsed)
+
+    trial_14.npy: order=15 (258s elapsed)
+
+    trial_15.npy: order=14 (278s elapsed)
+  DONE subject_14/session_20140627: 15 trials, mean_order=14.53, 278s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 44-----------------------------------------
+Executing:  88%|########8 | 44/50 [1:14:14<27:25, 274.24s/cell]Executing Cell 45--------------------------------------
+    trial_01.npy: order=15 (21s elapsed)
+
+    trial_02.npy: order=14 (42s elapsed)
+
+    trial_03.npy: order=14 (60s elapsed)
+
+    trial_04.npy: order=15 (80s elapsed)
+
+    trial_05.npy: order=14 (96s elapsed)
+
+    trial_06.npy: order=14 (114s elapsed)
+
+    trial_07.npy: order=15 (130s elapsed)
+
+    trial_08.npy: order=15 (145s elapsed)
+
+    trial_09.npy: order=15 (163s elapsed)
+
+    trial_10.npy: order=15 (179s elapsed)
+
+    trial_11.npy: order=15 (195s elapsed)
+
+    trial_12.npy: order=15 (211s elapsed)
+
+    trial_13.npy: order=14 (228s elapsed)
+
+    trial_14.npy: order=15 (244s elapsed)
+
+    trial_15.npy: order=14 (259s elapsed)
+  DONE subject_15/session_20130709: 15 trials, mean_order=14.60, 259s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 45-----------------------------------------
+Executing:  90%|######### | 45/50 [1:18:32<22:27, 269.57s/cell]Executing Cell 46--------------------------------------
+    trial_01.npy: order=15 (15s elapsed)
+
+    trial_02.npy: order=14 (37s elapsed)
+
+    trial_03.npy: order=14 (59s elapsed)
+
+    trial_04.npy: order=14 (81s elapsed)
+
+    trial_05.npy: order=14 (100s elapsed)
+
+    trial_06.npy: order=14 (118s elapsed)
+
+    trial_07.npy: order=14 (140s elapsed)
+
+    trial_08.npy: order=14 (160s elapsed)
+
+    trial_09.npy: order=15 (183s elapsed)
+
+    trial_10.npy: order=15 (205s elapsed)
+
+    trial_11.npy: order=14 (229s elapsed)
+
+    trial_12.npy: order=14 (252s elapsed)
+
+    trial_13.npy: order=14 (274s elapsed)
+
+    trial_14.npy: order=14 (296s elapsed)
+
+    trial_15.npy: order=14 (316s elapsed)
+  DONE subject_15/session_20131016: 15 trials, mean_order=14.20, 316s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 46-----------------------------------------
+Executing:  92%|#########2| 46/50 [1:23:48<18:53, 283.38s/cell]Executing Cell 47--------------------------------------
+    trial_01.npy: order=14 (20s elapsed)
+
+    trial_02.npy: order=14 (37s elapsed)
+
+    trial_03.npy: order=14 (52s elapsed)
+
+    trial_04.npy: order=14 (68s elapsed)
+
+    trial_05.npy: order=14 (83s elapsed)
+
+    trial_06.npy: order=14 (97s elapsed)
+
+    trial_07.npy: order=15 (114s elapsed)
+
+    trial_08.npy: order=14 (130s elapsed)
+
+    trial_09.npy: order=15 (149s elapsed)
+
+    trial_10.npy: order=14 (166s elapsed)
+
+    trial_11.npy: order=15 (182s elapsed)
+
+    trial_12.npy: order=14 (199s elapsed)
+
+    trial_13.npy: order=14 (215s elapsed)
+
+    trial_14.npy: order=14 (232s elapsed)
+
+    trial_15.npy: order=14 (247s elapsed)
+  DONE subject_15/session_20131105: 15 trials, mean_order=14.20, 247s -> saved to D:\Skripsi\new_data\02_pdc\output\pdc_order_metadata.json
+
+Ending Cell 47-----------------------------------------
+Executing:  94%|#########3| 47/50 [1:27:55<13:37, 272.43s/cell]Executing Cell 48--------------------------------------
+Ending Cell 48-----------------------------------------
+Executing Cell 49--------------------------------------
+Sessions recorded: 45 / 45
+Overall mean order: 14.51
+subject
+subject_01    14.622222
+subject_02    14.422222
+subject_03    14.488889
+subject_04    14.777778
+subject_05    14.622222
+subject_06    14.244444
+subject_07    14.533333
+subject_08    14.444444
+subject_09    14.844444
+subject_10    14.177778
+subject_11    14.422222
+subject_12    14.866667
+subject_13    14.622222
+subject_14    14.266667
+subject_15    14.333333
+Name: mean_order, dtype: float64
+Saved: D:\Skripsi\new_data\02_pdc\output\mvar_order_per_subject.csv
+
+Ending Cell 49-----------------------------------------
+Executing:  98%|#########8| 49/50 [1:27:57<02:27, 147.38s/cell]Executing Cell 50--------------------------------------
+Saved: D:\Skripsi\new_data\02_pdc\output\figures\mvar_order_analysis.png
+
+<Figure size 1200x600 with 1 Axes>
+Ending Cell 50-----------------------------------------
+Executing: 100%|##########| 50/50 [1:27:59<00:00, 105.60s/cell]

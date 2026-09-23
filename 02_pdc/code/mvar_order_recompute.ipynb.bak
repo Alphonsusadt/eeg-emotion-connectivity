@@ -1,0 +1,1133 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "82d5a127",
+   "metadata": {
+    "papermill": {
+     "duration": 0.017262,
+     "end_time": "2026-07-26T14:01:07.166346+00:00",
+     "exception": false,
+     "start_time": "2026-07-26T14:01:07.149084+00:00",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Rekomputasi Order MVAR per Subjek (untuk `mvar_order_analysis.png`)\n",
+    "\n",
+    "Menghitung ulang `VAR.select_order` (kriteria AIC) untuk seluruh 675 trial (15 subjek x 3 sesi x 15 trial), karena nilai order per-subjek yang dipakai pada `mvar_order_analysis.png` yang lama hanya pernah ada di memori kernel notebook saat itu dan tidak pernah disimpan ke disk (subjek S15 hilang dari chart lama akibat ini).\n",
+    "\n",
+    "**Catatan penting:** ini HANYA menghitung ulang pemilihan order MVAR untuk keperluan gambar ini. Tidak menyentuh atau menimpa matriks PDC yang sudah ada di `new_data/02_pdc/output/pdc_matrices/` -- itu sudah benar dan tidak diubah.\n",
+    "\n",
+    "Setiap sel di bawah memproses SATU sesi (15 trial, ~5-6 menit). Total 45 sesi, estimasi ~4-5 jam. Progress tersimpan ke `pdc_order_metadata.json` setelah setiap sesi selesai -- jadi kalau notebook ini dijalankan lewat papermill, file tersebut (dan file `.ipynb` ini sendiri) bisa dibuka kapan saja untuk melihat progres terakhir tanpa harus menunggu semuanya selesai.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "66f06a5f",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-26T14:01:07.192783Z",
+     "iopub.status.busy": "2026-07-26T14:01:07.192783Z",
+     "iopub.status.idle": "2026-07-26T14:01:12.555248Z",
+     "shell.execute_reply": "2026-07-26T14:01:12.554240Z"
+    },
+    "papermill": {
+     "duration": 5.376836,
+     "end_time": "2026-07-26T14:01:12.557813+00:00",
+     "exception": false,
+     "start_time": "2026-07-26T14:01:07.180977+00:00",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "ename": "JSONDecodeError",
+     "evalue": "Expecting value: line 189 column 11 (char 3121)",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[31m---------------------------------------------------------------------------\u001b[39m",
+      "\u001b[31mJSONDecodeError\u001b[39m                           Traceback (most recent call last)",
+      "\u001b[36mCell\u001b[39m\u001b[36m \u001b[39m\u001b[32mIn[1]\u001b[39m\u001b[32m, line 29\u001b[39m\n\u001b[32m     27\u001b[39m \u001b[38;5;28;01mif\u001b[39;00m os.path.exists(META_PATH):\n\u001b[32m     28\u001b[39m     \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mopen\u001b[39m(META_PATH) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[32m---> \u001b[39m\u001b[32m29\u001b[39m         metadata = \u001b[43mjson\u001b[49m\u001b[43m.\u001b[49m\u001b[43mload\u001b[49m\u001b[43m(\u001b[49m\u001b[43mf\u001b[49m\u001b[43m)\u001b[49m\n\u001b[32m     30\u001b[39m     \u001b[38;5;28mprint\u001b[39m(\u001b[33mf\u001b[39m\u001b[33m'\u001b[39m\u001b[33mResuming from existing \u001b[39m\u001b[38;5;132;01m{\u001b[39;00mMETA_PATH\u001b[38;5;132;01m}\u001b[39;00m\u001b[33m'\u001b[39m)\n\u001b[32m     31\u001b[39m \u001b[38;5;28;01melse\u001b[39;00m:\n",
+      "\u001b[36mFile \u001b[39m\u001b[32mc:\\Users\\aditp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\json\\__init__.py:293\u001b[39m, in \u001b[36mload\u001b[39m\u001b[34m(fp, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)\u001b[39m\n\u001b[32m    274\u001b[39m \u001b[38;5;28;01mdef\u001b[39;00m\u001b[38;5;250m \u001b[39m\u001b[34mload\u001b[39m(fp, *, \u001b[38;5;28mcls\u001b[39m=\u001b[38;5;28;01mNone\u001b[39;00m, object_hook=\u001b[38;5;28;01mNone\u001b[39;00m, parse_float=\u001b[38;5;28;01mNone\u001b[39;00m,\n\u001b[32m    275\u001b[39m         parse_int=\u001b[38;5;28;01mNone\u001b[39;00m, parse_constant=\u001b[38;5;28;01mNone\u001b[39;00m, object_pairs_hook=\u001b[38;5;28;01mNone\u001b[39;00m, **kw):\n\u001b[32m    276\u001b[39m \u001b[38;5;250m    \u001b[39m\u001b[33;03m\"\"\"Deserialize ``fp`` (a ``.read()``-supporting file-like object containing\u001b[39;00m\n\u001b[32m    277\u001b[39m \u001b[33;03m    a JSON document) to a Python object.\u001b[39;00m\n\u001b[32m    278\u001b[39m \n\u001b[32m   (...)\u001b[39m\u001b[32m    291\u001b[39m \u001b[33;03m    kwarg; otherwise ``JSONDecoder`` is used.\u001b[39;00m\n\u001b[32m    292\u001b[39m \u001b[33;03m    \"\"\"\u001b[39;00m\n\u001b[32m--> \u001b[39m\u001b[32m293\u001b[39m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[43mloads\u001b[49m\u001b[43m(\u001b[49m\u001b[43mfp\u001b[49m\u001b[43m.\u001b[49m\u001b[43mread\u001b[49m\u001b[43m(\u001b[49m\u001b[43m)\u001b[49m\u001b[43m,\u001b[49m\n\u001b[32m    294\u001b[39m \u001b[43m        \u001b[49m\u001b[38;5;28;43mcls\u001b[39;49m\u001b[43m=\u001b[49m\u001b[38;5;28;43mcls\u001b[39;49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[43mobject_hook\u001b[49m\u001b[43m=\u001b[49m\u001b[43mobject_hook\u001b[49m\u001b[43m,\u001b[49m\n\u001b[32m    295\u001b[39m \u001b[43m        \u001b[49m\u001b[43mparse_float\u001b[49m\u001b[43m=\u001b[49m\u001b[43mparse_float\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[43mparse_int\u001b[49m\u001b[43m=\u001b[49m\u001b[43mparse_int\u001b[49m\u001b[43m,\u001b[49m\n\u001b[32m    296\u001b[39m \u001b[43m        \u001b[49m\u001b[43mparse_constant\u001b[49m\u001b[43m=\u001b[49m\u001b[43mparse_constant\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[43mobject_pairs_hook\u001b[49m\u001b[43m=\u001b[49m\u001b[43mobject_pairs_hook\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[43m*\u001b[49m\u001b[43m*\u001b[49m\u001b[43mkw\u001b[49m\u001b[43m)\u001b[49m\n",
+      "\u001b[36mFile \u001b[39m\u001b[32mc:\\Users\\aditp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\json\\__init__.py:346\u001b[39m, in \u001b[36mloads\u001b[39m\u001b[34m(s, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)\u001b[39m\n\u001b[32m    341\u001b[39m     s = s.decode(detect_encoding(s), \u001b[33m'\u001b[39m\u001b[33msurrogatepass\u001b[39m\u001b[33m'\u001b[39m)\n\u001b[32m    343\u001b[39m \u001b[38;5;28;01mif\u001b[39;00m (\u001b[38;5;28mcls\u001b[39m \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m \u001b[38;5;129;01mand\u001b[39;00m object_hook \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m \u001b[38;5;129;01mand\u001b[39;00m\n\u001b[32m    344\u001b[39m         parse_int \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m \u001b[38;5;129;01mand\u001b[39;00m parse_float \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m \u001b[38;5;129;01mand\u001b[39;00m\n\u001b[32m    345\u001b[39m         parse_constant \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m \u001b[38;5;129;01mand\u001b[39;00m object_pairs_hook \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m \u001b[38;5;129;01mand\u001b[39;00m \u001b[38;5;129;01mnot\u001b[39;00m kw):\n\u001b[32m--> \u001b[39m\u001b[32m346\u001b[39m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[43m_default_decoder\u001b[49m\u001b[43m.\u001b[49m\u001b[43mdecode\u001b[49m\u001b[43m(\u001b[49m\u001b[43ms\u001b[49m\u001b[43m)\u001b[49m\n\u001b[32m    347\u001b[39m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28mcls\u001b[39m \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m:\n\u001b[32m    348\u001b[39m     \u001b[38;5;28mcls\u001b[39m = JSONDecoder\n",
+      "\u001b[36mFile \u001b[39m\u001b[32mc:\\Users\\aditp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\json\\decoder.py:337\u001b[39m, in \u001b[36mJSONDecoder.decode\u001b[39m\u001b[34m(self, s, _w)\u001b[39m\n\u001b[32m    332\u001b[39m \u001b[38;5;28;01mdef\u001b[39;00m\u001b[38;5;250m \u001b[39m\u001b[34mdecode\u001b[39m(\u001b[38;5;28mself\u001b[39m, s, _w=WHITESPACE.match):\n\u001b[32m    333\u001b[39m \u001b[38;5;250m    \u001b[39m\u001b[33;03m\"\"\"Return the Python representation of ``s`` (a ``str`` instance\u001b[39;00m\n\u001b[32m    334\u001b[39m \u001b[33;03m    containing a JSON document).\u001b[39;00m\n\u001b[32m    335\u001b[39m \n\u001b[32m    336\u001b[39m \u001b[33;03m    \"\"\"\u001b[39;00m\n\u001b[32m--> \u001b[39m\u001b[32m337\u001b[39m     obj, end = \u001b[38;5;28;43mself\u001b[39;49m\u001b[43m.\u001b[49m\u001b[43mraw_decode\u001b[49m\u001b[43m(\u001b[49m\u001b[43ms\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[43midx\u001b[49m\u001b[43m=\u001b[49m\u001b[43m_w\u001b[49m\u001b[43m(\u001b[49m\u001b[43ms\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[32;43m0\u001b[39;49m\u001b[43m)\u001b[49m\u001b[43m.\u001b[49m\u001b[43mend\u001b[49m\u001b[43m(\u001b[49m\u001b[43m)\u001b[49m\u001b[43m)\u001b[49m\n\u001b[32m    338\u001b[39m     end = _w(s, end).end()\n\u001b[32m    339\u001b[39m     \u001b[38;5;28;01mif\u001b[39;00m end != \u001b[38;5;28mlen\u001b[39m(s):\n",
+      "\u001b[36mFile \u001b[39m\u001b[32mc:\\Users\\aditp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\json\\decoder.py:355\u001b[39m, in \u001b[36mJSONDecoder.raw_decode\u001b[39m\u001b[34m(self, s, idx)\u001b[39m\n\u001b[32m    353\u001b[39m     obj, end = \u001b[38;5;28mself\u001b[39m.scan_once(s, idx)\n\u001b[32m    354\u001b[39m \u001b[38;5;28;01mexcept\u001b[39;00m \u001b[38;5;167;01mStopIteration\u001b[39;00m \u001b[38;5;28;01mas\u001b[39;00m err:\n\u001b[32m--> \u001b[39m\u001b[32m355\u001b[39m     \u001b[38;5;28;01mraise\u001b[39;00m JSONDecodeError(\u001b[33m\"\u001b[39m\u001b[33mExpecting value\u001b[39m\u001b[33m\"\u001b[39m, s, err.value) \u001b[38;5;28;01mfrom\u001b[39;00m\u001b[38;5;250m \u001b[39m\u001b[38;5;28;01mNone\u001b[39;00m\n\u001b[32m    356\u001b[39m \u001b[38;5;28;01mreturn\u001b[39;00m obj, end\n",
+      "\u001b[31mJSONDecodeError\u001b[39m: Expecting value: line 189 column 11 (char 3121)"
+     ]
+    }
+   ],
+   "source": [
+    "import os\n",
+    "import json\n",
+    "import time\n",
+    "import numpy as np\n",
+    "from statsmodels.tsa.api import VAR\n",
+    "import warnings\n",
+    "warnings.filterwarnings('ignore')\n",
+    "\n",
+    "INPUT_DIR = r'D:\\Skripsi\\new_data\\00_preprocessing\\output\\preprocessed_eeg'\n",
+    "OUTPUT_DIR = r'D:\\Skripsi\\new_data\\02_pdc\\output'\n",
+    "META_PATH = os.path.join(OUTPUT_DIR, 'pdc_order_metadata.json')\n",
+    "PDC_MAX_ORDER = 15\n",
+    "PDC_MIN_ORDER = 3\n",
+    "\n",
+    "def fit_order_only(data, max_order=15, min_order=3):\n",
+    "    \"\"\"Same order-selection logic as fit_mvar() in 02_pdc_analysis.ipynb,\n",
+    "    but skips building coefficients / PDC -- we only need the AIC order here.\"\"\"\n",
+    "    model = VAR(data)\n",
+    "    try:\n",
+    "        order_result = model.select_order(maxlags=max_order)\n",
+    "        optimal_order = order_result.aic\n",
+    "        optimal_order = max(optimal_order, min_order)\n",
+    "    except Exception:\n",
+    "        optimal_order = 5\n",
+    "    return optimal_order\n",
+    "\n",
+    "if os.path.exists(META_PATH):\n",
+    "    with open(META_PATH) as f:\n",
+    "        metadata = json.load(f)\n",
+    "    print(f'Resuming from existing {META_PATH}')\n",
+    "else:\n",
+    "    metadata = {'fs': 100, 'subjects': {}}\n",
+    "\n",
+    "def process_session(subject, session):\n",
+    "    if subject in metadata['subjects'] and session in metadata['subjects'][subject]:\n",
+    "        print(f'  [SKIP already done] {subject}/{session}')\n",
+    "        return\n",
+    "    session_dir = os.path.join(INPUT_DIR, subject, session)\n",
+    "    trial_files = sorted(f for f in os.listdir(session_dir) if f.endswith('.npy'))\n",
+    "    orders = []\n",
+    "    t0 = time.time()\n",
+    "    for tf in trial_files:\n",
+    "        eeg = np.load(os.path.join(session_dir, tf))\n",
+    "        data = eeg.T\n",
+    "        order = fit_order_only(data, PDC_MAX_ORDER, PDC_MIN_ORDER)\n",
+    "        orders.append(order)\n",
+    "        print(f'    {tf}: order={order} ({time.time()-t0:.0f}s elapsed)')\n",
+    "    elapsed = time.time() - t0\n",
+    "    metadata['subjects'].setdefault(subject, {})[session] = {\n",
+    "        'n_trials': len(orders), 'mean_order': float(np.mean(orders)),\n",
+    "        'orders': orders, 'time_s': round(elapsed, 1),\n",
+    "    }\n",
+    "    with open(META_PATH, 'w') as f:\n",
+    "        json.dump(metadata, f, indent=2)\n",
+    "    print(f'  DONE {subject}/{session}: {len(orders)} trials, mean_order={np.mean(orders):.2f}, {elapsed:.0f}s -> saved to {META_PATH}')\n",
+    "\n",
+    "print('Setup OK. META_PATH =', META_PATH)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "66f06a5f",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-26T14:01:07.192783Z",
+     "iopub.status.busy": "2026-07-26T14:01:07.192783Z",
+     "iopub.status.idle": "2026-07-26T14:01:12.555248Z",
+     "shell.execute_reply": "2026-07-26T14:01:12.554240Z"
+    },
+    "papermill": {
+     "duration": 5.376836,
+     "end_time": "2026-07-26T14:01:12.557813+00:00",
+     "exception": false,
+     "start_time": "2026-07-26T14:01:07.180977+00:00",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_01', 'session_20131027')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "376e3e24",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-26T14:01:12.620942Z",
+     "iopub.status.busy": "2026-07-26T14:01:12.618934Z"
+    },
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": false,
+     "start_time": "2026-07-26T14:01:12.602698+00:00",
+     "status": "running"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_01', 'session_20131030')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "415f0244",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_01', 'session_20131107')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e7d596aa",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_02', 'session_20140404')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c283ffc2",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_02', 'session_20140413')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "72b26d01",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_02', 'session_20140419')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "1f7af07a",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_03', 'session_20140603')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f1eff0ae",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_03', 'session_20140611')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ad11bb96",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_03', 'session_20140629')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3b33c95c",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_04', 'session_20140621')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d6048b81",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_04', 'session_20140702')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "344648c9",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_04', 'session_20140705')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8df6f566",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_05', 'session_20140411')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0b5c5ba8",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_05', 'session_20140418')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8bcac2c3",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "80841dd2",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_05', 'session_20140506')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "80841dd2",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_06', 'session_20130712')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2250dc85",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_06', 'session_20131016')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b251dafd",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_06', 'session_20131113')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4dcbe8eb",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_07', 'session_20131027')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "70f7d530",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_07', 'session_20131030')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "722bdbde",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_07', 'session_20131106')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a8505b82",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_08', 'session_20140511')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "94e76ea6",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_08', 'session_20140514')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4dd0e0e2",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_08', 'session_20140521')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "74c8f8da",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_09', 'session_20140620')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e365fa62",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_09', 'session_20140627')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "7cef239c",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_09', 'session_20140704')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e7574bae",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_10', 'session_20131130')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c006c4e0",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_10', 'session_20131204')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e3b86f35",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_10', 'session_20131211')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6d57cb84",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_11', 'session_20140618')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "02b29f47",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_11', 'session_20140625')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f75c4be8",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_11', 'session_20140630')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e8b0851f",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_12', 'session_20131127')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3cb67d62",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_12', 'session_20131201')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "136f35b7",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_12', 'session_20131207')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fe5251cf",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_13', 'session_20140527')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "98b5c6d1",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_13', 'session_20140603')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8b30574a",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_13', 'session_20140610')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5520846a",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_14', 'session_20140601')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e7801bec",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_14', 'session_20140615')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "04ebec49",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_14', 'session_20140627')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b409940c",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_15', 'session_20130709')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2f69d07c",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_15', 'session_20131016')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "7541e96a",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "process_session('subject_15', 'session_20131105')\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "06b0f740",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "source": [
+    "## Ringkasan & Plot\n",
+    "\n",
+    "Dijalankan setelah seluruh 45 sesi di atas selesai."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "02f0eec1",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "order_data = []\n",
+    "for subj, sessions in metadata['subjects'].items():\n",
+    "    for sess, info in sessions.items():\n",
+    "        order_data.append({'subject': subj, 'session': sess, 'mean_order': info['mean_order']})\n",
+    "df_order = pd.DataFrame(order_data)\n",
+    "print(f'Sessions recorded: {len(df_order)} / 45')\n",
+    "print(f\"Overall mean order: {df_order['mean_order'].mean():.2f}\")\n",
+    "per_subject = df_order.groupby('subject')['mean_order'].mean().sort_index()\n",
+    "print(per_subject)\n",
+    "\n",
+    "csv_path = os.path.join(OUTPUT_DIR, 'mvar_order_per_subject.csv')\n",
+    "per_subject.to_csv(csv_path)\n",
+    "print('Saved:', csv_path)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "15a858b9",
+   "metadata": {
+    "papermill": {
+     "duration": null,
+     "end_time": null,
+     "exception": null,
+     "start_time": null,
+     "status": "pending"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "overall_mean = df_order['mean_order'].mean()\n",
+    "\n",
+    "fig, ax = plt.subplots(figsize=(12, 6))\n",
+    "bars = ax.bar(per_subject.index, per_subject.values, color='steelblue')\n",
+    "ax.axhline(y=overall_mean, color='red', linestyle='--',\n",
+    "           label=f'Overall mean: {overall_mean:.1f}')\n",
+    "for rect, val in zip(bars, per_subject.values):\n",
+    "    ax.text(rect.get_x() + rect.get_width() / 2, val + 0.05, f'{val:.1f}',\n",
+    "            ha='center', va='bottom', fontsize=18, fontweight='bold')\n",
+    "\n",
+    "ax.set_title('Mean MVAR Order per Subject (selected by AIC)', fontsize=26, fontweight='bold')\n",
+    "ax.set_ylabel('Order', fontsize=20)\n",
+    "ax.set_xlabel('subject', fontsize=20)\n",
+    "ax.tick_params(axis='both', labelsize=17)\n",
+    "plt.setp(ax.get_xticklabels(), rotation=90)\n",
+    "ax.set_ylim(0, max(per_subject.values) * 1.15)\n",
+    "ax.legend(fontsize=18)\n",
+    "plt.tight_layout()\n",
+    "\n",
+    "out = os.path.join(OUTPUT_DIR, 'figures', 'mvar_order_analysis.png')\n",
+    "os.makedirs(os.path.dirname(out), exist_ok=True)\n",
+    "fig.savefig(out, dpi=150, bbox_inches='tight', facecolor='white')\n",
+    "print('Saved:', out)\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.1"
+  },
+  "papermill": {
+   "default_parameters": {},
+   "duration": null,
+   "end_time": null,
+   "environment_variables": {},
+   "exception": null,
+   "input_path": "mvar_order_recompute.ipynb",
+   "output_path": "mvar_order_recompute.ipynb",
+   "parameters": {},
+   "start_time": "2026-07-26T14:01:03.269255+00:00",
+   "version": "2.7.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
