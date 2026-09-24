@@ -24,7 +24,6 @@ readable reports rather than inferred from file presence alone.
 - [ ] Canonical Phase 6.7 tables, figures, summary, run report, prerequisite report, and provenance manifest are copied read-only to the paper evidence archive.
 
 Current status (2026-09-24): **NOT FROZEN**. Current-compatible 6.1 coverage is
-0/675; one historical sanity run exists but is classified incompatible with the new
-instrumented extractor provenance and must be rerun. Final 6.2–6.7 empirical runs do
-not exist. No final provenance manifest has been created.
-
+6/675 after the passed equivalence gate and representative pilot; 669 trials remain
+missing. Final 6.2–6.7 empirical runs do not exist. No final provenance manifest has
+been created, and no final checklist item above is checked.

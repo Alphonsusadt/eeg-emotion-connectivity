@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "run_path": "D:\\Skripsi\\new_data\\phase_6_wearable_evaluation\\6.1_windowed_feature_extraction\\output\\subject_01\\session_20131027\\trial_01\\run_20260924T083534_851672Z",
+  "active_method": "fdr",
+  "active_behavior": "minimum ssr_ftest p-value across configured lags, then one BH-FDR across directed off-diagonal edges",
+  "mean_raw_nonzero_density": 1.0,
+  "mean_thresholded_density": 0.9048122686409307,
+  "total_fdr_rejected_edges": 10266,
+  "historical_documentation": "README target <30%; older percentile outputs commonly ~0.1002",
+  "interpretation": "Stored matrices exactly reproduce the active implementation. High density is method behavior, not evidence of a storage/threshold application bug. Preserve and review scientifically; do not silently change."
+}

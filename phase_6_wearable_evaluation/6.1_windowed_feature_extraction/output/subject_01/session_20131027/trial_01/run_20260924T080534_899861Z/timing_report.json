@@ -1,0 +1,38 @@
+{
+  "load_preprocess_seconds": 1.246596099997987,
+  "spectral_seconds": 0.1109083999908762,
+  "gc_seconds": 1349.7286411000096,
+  "pdc_seconds": 25.234066199991503,
+  "roi_aggregation_seconds": 0.019455199973890558,
+  "save_seconds": 0.1327545999956783,
+  "total_seconds": 1376.5153193000006,
+  "per_window": [
+    {
+      "window_id": 1,
+      "spectral_seconds": 0.04571369999030139,
+      "gc_seconds": 457.8034626000008,
+      "pdc_seconds": 8.887172999995528,
+      "roi_aggregation_seconds": 0.006994199997279793,
+      "save_seconds": 0.057132300004013814,
+      "elapsed_seconds": 466.7494349999906
+    },
+    {
+      "window_id": 2,
+      "spectral_seconds": 0.040295300001162104,
+      "gc_seconds": 452.0344521000079,
+      "pdc_seconds": 8.991311100005987,
+      "roi_aggregation_seconds": 0.008334499987540767,
+      "save_seconds": 0.050132899996242486,
+      "elapsed_seconds": 461.0780259999883
+    },
+    {
+      "window_id": 3,
+      "spectral_seconds": 0.024899399999412708,
+      "gc_seconds": 439.89072640000086,
+      "pdc_seconds": 7.355582099989988,
+      "roi_aggregation_seconds": 0.004126499989069998,
+      "save_seconds": 0.02548939999542199,
+      "elapsed_seconds": 447.2792036000028
+    }
+  ]
+}

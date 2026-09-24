@@ -1,7 +1,7 @@
 # Pre-paper execution readiness status
 
-Status date: 2026-09-24. The implementation is ready for controlled pilot execution,
-but real-data paper evidence is not yet complete and is not frozen.
+Status date: 2026-09-24. Fresh equivalence and the representative six-trial pilot
+passed, but real-data paper evidence is not yet complete and is not frozen.
 
 ## Complete implementation
 
@@ -18,26 +18,23 @@ but real-data paper evidence is not yet complete and is not frozen.
 
 ## Real-data work pending
 
-- Fresh serial/process-worker equivalence runs using the current instrumented hashes.
-- Six-trial representative pilot: S01/S02, Session 1, trials 1–3.
 - Full 675-trial extraction.
 - Final 6.2, 6.3, 6.4, 6.5, 6.6 (1000 bootstrap, seed 42), and 6.7 in order.
 - Final provenance freeze and read-only evidence archive.
 
 ## Current coverage and compute estimate
 
-Dashboard result: 0/675 current-compatible passed, 0 failed, 674 missing, and 1
-incompatible historical sanity run. The old run remains useful for runtime/density
-audit but is not silently accepted after extractor provenance instrumentation.
+Dashboard result: 6/675 current-compatible passed, 0 failed, 669 missing, and 0
+incompatible after selecting current runs. Fresh serial/worker equivalence passed at
+`1e-10`; the selected six-trial subset is 6/6 passed with 18 windows.
 
-Observed runtime is 1,450.1 seconds per representative three-window trial. A simple
-constant-runtime projection is about 271.9 serial hours (11.3 days) for 675 trials.
-Idealized compute-only projections are about 136.0 hours with 2 workers and 68.0 hours
-with 4 workers; real wall time will be longer because trial/window counts, contention,
-I/O, RAM, and thermal limits vary. This host reports 8 physical/16 logical CPU and
-about 19.7 GiB RAM. Start with 2 workers after equivalence passes; treat 3 as the
-pilot-tested ceiling unless memory measurements justify otherwise. The 4-worker
-number is a scaling illustration, not the recommendation for this host.
+The selected pilot mean/median trial runtime was 1436.9/1178.1 seconds. A naive mean-
+based serial projection is 269.4 hours. The observed five-new-trial two-worker batch
+throughput was 4.16 trials/hour, implying a rough 162.2-hour (6.76-day) full projection.
+This is not linear-scaling evidence: two timings crossed user-turn interruptions and
+the queue tail used only one worker. An early snapshot saw ~199–201 MiB RSS per child,
+7.6 GiB RAM available, and no extraction OOM/timeout. Continuous peak/thermal telemetry
+was unavailable. Keep 2 workers; do not automatically increase to 3.
 
 ## Next commands
 

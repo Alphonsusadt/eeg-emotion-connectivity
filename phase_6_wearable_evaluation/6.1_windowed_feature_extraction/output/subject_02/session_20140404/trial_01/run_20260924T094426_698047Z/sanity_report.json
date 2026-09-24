@@ -1,0 +1,130 @@
+{
+  "status": "passed",
+  "source": "D:\\Skripsi\\new_data\\00_preprocessing\\output\\preprocessed_eeg\\subject_02\\session_20140404\\trial_01.npy",
+  "source_sha256": "3f13865863789c3ada15e298ddd7857b3ad025b2eee5b3ff9b85c763920a9122",
+  "pipeline_sha256": {
+    "config.py": "9672f76a763ba25d08c07d30e45aada730ee3bee657148705b81c8b1d2bb209d",
+    "01_granger_causality/code/gc_analyzer.py": "9ef6d7fa3233d8b1bc48c8b0c9cea1ce56cedf7c2f5a73b5f3edd937efad9f29",
+    "02_pdc/code/pdc_analyzer.py": "be3edb5d35be82c634e77aae82c60d61b12ed306ec5c5ada16e6e5b4030a61fc",
+    "03_spectral_features/code/03_spectral_features.ipynb": "1d8e5941239d601e35a73ea4caf24fc646626bfd07569c58b00ba765b6d24492",
+    "phase_3_feature_engineering/3.4_roi_aggregation/code/3.4_roi_aggregation.ipynb": "2dc8ea8f76a1991cd14e3a80d222b2039501cc1e2f1a8851123211e24ba8eb1a",
+    "phase_6_wearable_evaluation/6.1_windowed_feature_extraction/code/extract_windows.py": "f9931ecad0fa61bbc9b0566117ec41eb8075f214a7cf0ccf2cce0d67aaec8c80"
+  },
+  "fs": 100,
+  "window_seconds": 60,
+  "overlap_samples": 0,
+  "tail_policy": "drop",
+  "input_shape": [
+    62,
+    23501
+  ],
+  "n_windows": 3,
+  "discarded_samples": 5501,
+  "channels": [
+    "Fp1",
+    "Fpz",
+    "Fp2",
+    "AF3",
+    "AF4",
+    "F7",
+    "F5",
+    "F3",
+    "F1",
+    "Fz",
+    "F2",
+    "F4",
+    "F6",
+    "F8",
+    "FT7",
+    "FC5",
+    "FC3",
+    "FC1",
+    "FCz",
+    "FC2",
+    "FC4",
+    "FC6",
+    "FT8",
+    "T7",
+    "C5",
+    "C3",
+    "C1",
+    "Cz",
+    "C2",
+    "C4",
+    "C6",
+    "T8",
+    "TP7",
+    "CP5",
+    "CP3",
+    "CP1",
+    "CPz",
+    "CP2",
+    "CP4",
+    "CP6",
+    "TP8",
+    "P7",
+    "P5",
+    "P3",
+    "P1",
+    "Pz",
+    "P2",
+    "P4",
+    "P6",
+    "P8",
+    "PO7",
+    "PO5",
+    "PO3",
+    "POz",
+    "PO4",
+    "PO6",
+    "PO8",
+    "CB1",
+    "O1",
+    "Oz",
+    "O2",
+    "CB2"
+  ],
+  "gc_max_lag": 10,
+  "gc_threshold": "fdr",
+  "gc_alpha": 0.05,
+  "pdc_max_order": 15,
+  "pdc_min_order": 3,
+  "bands": {
+    "delta": [
+      0.5,
+      4
+    ],
+    "theta": [
+      4,
+      8
+    ],
+    "alpha": [
+      8,
+      13
+    ],
+    "beta": [
+      13,
+      30
+    ],
+    "gamma": [
+      30,
+      45
+    ]
+  },
+  "matrix_orientation": "GC: source,target; PDC raw: target,source; ROI features: source,target",
+  "normalization": "GC internal per-window preprocessing only; no subject/session feature normalization",
+  "scope": "Offline windows from already-preprocessed EEG; not causal streaming preprocessing",
+  "versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.3.3"
+  },
+  "completed_windows": 3,
+  "n_features": 970,
+  "total_seconds": 957.2032067000109,
+  "timing_report": "timing_report.json",
+  "gc_density_audit": {
+    "method": "fdr",
+    "pvalue_selection": "minimum ssr_ftest p-value across lags 1..gc_max_lag before correction",
+    "note": "Descriptive audit only; no thresholding behavior changed."
+  }
+}

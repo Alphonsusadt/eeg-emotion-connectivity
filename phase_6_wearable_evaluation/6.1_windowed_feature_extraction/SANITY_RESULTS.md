@@ -36,4 +36,21 @@ Baseline source hashes verified unchanged. No classifier or full-dataset run per
 - Read-only GC audit reproduced every stored thresholded matrix exactly. Across the
   three sanity windows, mean thresholded density is 0.904812. The active minimum-p-
   across-lags then BH-FDR behavior was preserved; no scientific threshold changed.
-- No representative pilot or full extraction was run.
+- At that readiness-audit checkpoint, no representative pilot or full extraction had been run.
+
+## Fresh equivalence and six-trial pilot (2026-09-24)
+
+- Fresh serial S01/S1/T1 passed at `run_20260924T080534_899861Z`.
+- Fresh one-child worker probe passed at `run_20260924T083534_851672Z`.
+- Strict serial/worker equivalence passed at `1e-10`; feature CSV and all three
+  matrix archives were byte-identical by SHA256. Current pipeline hashes matched.
+- Representative pilot S01/S02, Session 1, trials 1–3 completed: 6/6 passed,
+  18 windows/feature rows, zero missing/failed/incompatible within the subset.
+- Two-worker batch completed five pending trials with zero failures; the valid
+  worker-probe S01/S1/T1 was skipped/reused by normal resume behavior.
+- Global current-compatible coverage is 6/675 (0.89%), with 669 missing.
+- Fresh GC audit mean thresholded density is 0.904812, consistent with the previous audit.
+- Phase 6.2 audit found two subjects and 18 windows. Pilot eligibility and two LOSO
+  splits passed with all three classes. Classifier pilot was not run because the
+  existing CLI cannot restrict execution to Spectral-only without editing Phase 6.2.
+- No full extraction or final 6.2–6.7 experiment was run.

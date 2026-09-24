@@ -1,0 +1,32 @@
+{
+  "status": "running",
+  "timestamp": "20260924T082849_542990Z",
+  "requested_trials": 1,
+  "already_passed": 1,
+  "pending_trials": 1,
+  "workers": 1,
+  "resume": false,
+  "single_thread_env": [
+    "OMP_NUM_THREADS",
+    "OPENBLAS_NUM_THREADS",
+    "MKL_NUM_THREADS",
+    "VECLIB_MAXIMUM_THREADS",
+    "NUMEXPR_NUM_THREADS",
+    "BLIS_NUM_THREADS"
+  ],
+  "pipeline_sha256": {
+    "config.py": "9672f76a763ba25d08c07d30e45aada730ee3bee657148705b81c8b1d2bb209d",
+    "01_granger_causality/code/gc_analyzer.py": "9ef6d7fa3233d8b1bc48c8b0c9cea1ce56cedf7c2f5a73b5f3edd937efad9f29",
+    "02_pdc/code/pdc_analyzer.py": "be3edb5d35be82c634e77aae82c60d61b12ed306ec5c5ada16e6e5b4030a61fc",
+    "03_spectral_features/code/03_spectral_features.ipynb": "1d8e5941239d601e35a73ea4caf24fc646626bfd07569c58b00ba765b6d24492",
+    "phase_3_feature_engineering/3.4_roi_aggregation/code/3.4_roi_aggregation.ipynb": "2dc8ea8f76a1991cd14e3a80d222b2039501cc1e2f1a8851123211e24ba8eb1a",
+    "phase_6_wearable_evaluation/6.1_windowed_feature_extraction/code/extract_windows.py": "f9931ecad0fa61bbc9b0566117ec41eb8075f214a7cf0ccf2cce0d67aaec8c80"
+  },
+  "planned_keys": [
+    [
+      1,
+      1,
+      1
+    ]
+  ]
+}
