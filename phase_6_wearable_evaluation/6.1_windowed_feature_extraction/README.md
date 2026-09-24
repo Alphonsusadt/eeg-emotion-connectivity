@@ -14,6 +14,44 @@ Pilihan trial lain: `--subject 2 --session-index 1 --trial 1`.
 Session index 1–3 dipetakan ke tanggal melalui `config.SUBJECT_SESSIONS`.
 Tidak ada eksekusi otomatis seluruh dataset.
 
+## Batch extraction, resume, dan coverage
+
+`run_batch_extraction.py` mengenumerasi tepat 15 × 3 × 15 = 675 trial. Run `passed`
+yang lengkap dan memiliki hash pipeline saat ini dilewati; run `running`/gagal,
+hilang, atau tidak kompatibel dijadwalkan ulang sebagai run unik. Duplicate passed
+runs tidak menggandakan evidence: run valid terbaru dipilih dan sisanya dicatat.
+
+```powershell
+# Read-only inventory; tidak mengekstrak
+python -B phase_6_wearable_evaluation/6.1_windowed_feature_extraction/code/check_extraction_coverage.py
+python -B phase_6_wearable_evaluation/6.1_windowed_feature_extraction/code/run_batch_extraction.py --audit-only
+
+# Representative pilot: S01/S02, Session 1, trials 1–3 (semua kelas)
+python -B phase_6_wearable_evaluation/6.1_windowed_feature_extraction/code/run_batch_extraction.py --subjects 1 2 --sessions 1 --trials 1 2 3 --workers 1 --resume --dry-run
+
+# Full plan only (safe; no extraction)
+python -B phase_6_wearable_evaluation/6.1_windowed_feature_extraction/code/run_batch_extraction.py --workers 2 --resume --dry-run
+```
+
+Eksekusi nyata dilakukan dengan menghapus `--dry-run`. Gunakan awalnya satu worker.
+Sebelum `--workers > 1`, buat dua hasil untuk trial yang sama—satu melalui single-trial
+extractor dan satu melalui probe child-process terbatas—lalu bandingkan:
+
+```powershell
+python -B phase_6_wearable_evaluation/6.1_windowed_feature_extraction/code/extract_windows.py --subject 1 --session-index 1 --trial 1
+python -B phase_6_wearable_evaluation/6.1_windowed_feature_extraction/code/run_batch_extraction.py --subjects 1 --sessions 1 --trials 1 --worker-probe
+python -B phase_6_wearable_evaluation/6.1_windowed_feature_extraction/code/check_parallel_equivalence.py --serial-run PATH_SERIAL --worker-run PATH_WORKER --tolerance 1e-10
+```
+
+Parallel mode fail-closed bila `parallel_equivalence_report.json` tidak `passed` atau
+hash pipeline berubah. Worker memaksa OpenMP/OpenBLAS/MKL/NumExpr/BLIS satu thread.
+`--worker-probe` hanya mengizinkan tepat satu trial dalam satu child process; ini
+adalah determinism gate, bukan izin menjalankan batch paralel tanpa report.
+Host audit melihat 8 physical/16 logical CPU dan sekitar 19,7 GiB RAM. Rekomendasi
+untuk host ini adalah **2 workers**; coba maksimum 3 hanya setelah pilot menunjukkan
+RAM tanpa paging dan throughput membaik. Jangan menyamakan jumlah worker dengan jumlah logical core: setiap
+trial memuat VAR 62-channel dan ribuan fit GC, sehingga RAM dan bandwidth menjadi batas.
+
 ## Protokol
 
 - Input `(62, samples)` pada `config.TARGET_FS` (100 Hz saat ini).
@@ -40,6 +78,8 @@ Setiap eksekusi membuat direktori unik di
 - `windowed_features.csv`: satu baris/window, 620 fitur spektral + 50 GC ROI +
   300 PDC ROI = 970 fitur, ditambah 12 kolom identitas/batas/label.
 - `window_manifest.csv`: identitas window, berkas matriks, density GC, order VAR, durasi komputasi.
+- `timing_report.json`: load/preprocess setup, spectral, GC, PDC, ROI aggregation,
+  save, total, dan timing per window.
 - `window_NNN.npz`: GC raw, p-values, thresholded, dan enam matriks PDC (62×62).
 - `sanity_report.json`: status, SHA256 input dan sumber pipeline, parameter, channel,
   orientasi matriks, jumlah window, dan sisa sampel.
@@ -58,5 +98,26 @@ error pasangan secara diam-diam; pemeriksaan ini tidak membuktikan semua pasanga
 
 Data sudah difilter pada tahap preprocessing lama. Hasil ini merupakan simulasi window
 offline, belum bukti preprocessing kausal atau performa wearable real-time.
+
+Batch output menyimpan `batch_plan.csv`, `batch_report.json`, dan
+`batch_timing_summary.csv`. Coverage dashboard menyimpan `coverage_dashboard.csv`
+serta `coverage_summary.json` dengan passed/failed/missing/incompatible dan agregat
+per subject/session.
+
+## Runtime dan audit density GC
+
+Sanity S01/S1/T1 membutuhkan 1.450,1 detik untuk tiga window. Implementasi aktif
+melakukan 62×61=3.782 arah GC per window dan `statsmodels.grangercausalitytests`
+mengevaluasi lag 1–10 untuk setiap arah; ini bottleneck dominan yang dipertahankan
+karena mengubahnya dapat mengubah hasil ilmiah. PDC VAR/AIC adalah beban berikutnya;
+spectral/ROI/I/O diprofilkan terpisah agar keputusan berbasis measurement.
+
+Setiap window kini mencatat raw nonzero density, thresholded density, distribusi
+p-value, jumlah p<alpha, dan jumlah edge ditolak FDR. Read-only audit artefak sanity
+mereproduksi matriks tersimpan secara tepat dan mendapat mean density 0,904812.
+Dokumentasi lama menyebut target <30% dan output percentile lama sekitar 0,1002.
+Perbedaan ini konsisten dengan metode aktif: minimum p-value dipilih dari 10 lag
+sebelum BH-FDR. Tidak ada threshold yang diubah. Ini harus dilaporkan/review secara
+ilmiah, bukan “diperbaiki” diam-diam.
 
 Dependensi: numpy, scipy, pandas, statsmodels, threadpoolctl (lingkungan baseline).

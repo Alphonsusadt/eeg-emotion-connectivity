@@ -1,0 +1,15 @@
+{
+  "final_claims_generated": false,
+  "missing_phases": [
+    "6.2",
+    "6.3",
+    "6.4",
+    "6.5",
+    "6.6"
+  ],
+  "mode": "audit",
+  "script_sha256": "37cff723e565874d7fb59f4d91b0b313acd57fe7e225db598fa39dc2ad9e2f5f",
+  "selected_phases": [],
+  "status": "audit_only",
+  "timestamp": "20260924T074731_198584Z"
+}

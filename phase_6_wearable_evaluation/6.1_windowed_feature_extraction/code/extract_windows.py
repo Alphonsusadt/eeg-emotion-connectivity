@@ -52,6 +52,33 @@ GC = "01_granger_causality/code/gc_analyzer.py"
 PDC = "02_pdc/code/pdc_analyzer.py"
 
 
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def gc_audit(raw, pvalues, thresholded, alpha):
+    """Descriptive audit only; it does not apply or change thresholding."""
+    offdiag = ~np.eye(raw.shape[0], dtype=bool)
+    raw_values = raw[offdiag]
+    p = pvalues[offdiag]
+    threshold_values = thresholded[offdiag]
+    return {
+        "gc_raw_nonzero_density": float(np.count_nonzero(raw_values) / len(raw_values)),
+        "gc_thresholded_density": float(np.count_nonzero(threshold_values) / len(threshold_values)),
+        "gc_pvalue_min": float(np.min(p)),
+        "gc_pvalue_q01": float(np.quantile(p, .01)),
+        "gc_pvalue_q05": float(np.quantile(p, .05)),
+        "gc_pvalue_median": float(np.median(p)),
+        "gc_pvalue_q95": float(np.quantile(p, .95)),
+        "gc_pvalue_max": float(np.max(p)),
+        "gc_uncorrected_p_lt_alpha": int(np.count_nonzero(p < alpha)),
+        # For the configured FDR method, nonzero thresholded edges are exactly
+        # the rejected edges. Other methods retain this count under a neutral name.
+        "gc_fdr_rejected_edges": int(np.count_nonzero(threshold_values)),
+        "gc_possible_edges": int(len(p)),
+    }
+
+
 def window_bounds(n_samples, fs=100, seconds=60):
     size = int(fs * seconds)
     if size <= 0 or size != fs * seconds or n_samples < 0:
@@ -60,10 +87,12 @@ def window_bounds(n_samples, fs=100, seconds=60):
 
 
 def run(subject=1, session_index=1, trial=1):
+    run_started = time.perf_counter()
     if subject not in cfg.SUBJECT_SESSIONS or not 1 <= session_index <= 3 or not 1 <= trial <= 15:
         raise ValueError("Expected subject 1..15, session-index 1..3, trial 1..15")
     session = cfg.SUBJECT_SESSIONS[subject][session_index - 1]
     source = Path(cfg.PREPROCESS_DIR) / f"subject_{subject:02d}" / f"session_{session}" / f"trial_{trial:02d}.npy"
+    load_started = time.perf_counter()
     eeg = np.load(source, allow_pickle=False)
     if eeg.ndim != 2 or eeg.shape[0] != len(cfg.CHANNEL_NAMES) or not np.isfinite(eeg).all():
         raise ValueError("Expected finite EEG with shape (62, samples)")
@@ -77,14 +106,16 @@ def run(subject=1, session_index=1, trial=1):
     roi_names = list(roi["ROI_GROUPS"])
     roi_indices = {name: [cfg.CHANNEL_NAMES.index(c) for c in channels]
                    for name, channels in roi["ROI_GROUPS"].items()}
+    load_preprocess_seconds = time.perf_counter() - load_started
     out = STAGE / "output" / f"subject_{subject:02d}" / f"session_{session}" / f"trial_{trial:02d}"
     out.mkdir(parents=True, exist_ok=True)
     # Unique run directory prevents mixing partial/new results with a previous run.
     from datetime import datetime, timezone
     out = out / datetime.now(timezone.utc).strftime("run_%Y%m%dT%H%M%S_%fZ")
     out.mkdir()
-    provenance = {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest()
+    provenance = {p: sha256(ROOT / p)
                   for p in ["config.py", GC, PDC, SPECTRAL, ROI]}
+    provenance[str(Path(__file__).resolve().relative_to(ROOT)).replace("\\", "/")] = sha256(__file__)
     metadata = {
         "status": "running", "source": str(source),
         "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
@@ -116,13 +147,21 @@ def run(subject=1, session_index=1, trial=1):
                "window_id": number, "start_sample": start, "stop_sample": stop,
                "start_seconds": start / cfg.TARGET_FS, "stop_seconds": stop / cfg.TARGET_FS}
         print(f"Window {number}/{len(bounds)} [{start}:{stop}]: GC", flush=True)
+        part_started = time.perf_counter()
         raw, pv, thresholded, density = gc.analyze_trial(window)
+        gc_seconds = time.perf_counter() - part_started
         print(f"Window {number}: PDC", flush=True)
+        part_started = time.perf_counter()
         band_pdc, order = pdc.analyze_trial(window)
+        pdc_seconds = time.perf_counter() - part_started
+        part_started = time.perf_counter()
         features = spectral["extract_trial_features"](window, cfg.TARGET_FS, cfg.PDC_FREQUENCY_BANDS, cfg.CHANNEL_NAMES)
+        spectral_seconds = time.perf_counter() - part_started
+        part_started = time.perf_counter()
         for prefix, matrix in [("gc_roi", thresholded)] + [(f"pdc_{band}_roi", matrix.T) for band, matrix in band_pdc.items()]:
             reduced = roi["aggregate_roi_matrix"](matrix, roi_indices, roi_names)
             features.update(roi["extract_roi_features"](reduced, roi_names, prefix))
+        roi_seconds = time.perf_counter() - part_started
         matrices = {"gc_raw": raw, "gc_pvalues": pv, "gc_thresholded": thresholded,
                     **{f"pdc_{b}": m for b, m in band_pdc.items()}}
         if any(m.shape != (62, 62) or not np.isfinite(m).all() for m in matrices.values()):
@@ -135,16 +174,40 @@ def run(subject=1, session_index=1, trial=1):
             raise ValueError("All GC fits returned zero; inspect analyzer failures")
         if any(np.any(m < 0) or np.any(m > 1 + 1e-10) for m in band_pdc.values()):
             raise ValueError("PDC outside [0, 1]")
+        audit = gc_audit(raw, pv, thresholded, cfg.GC_ALPHA)
         name = f"window_{number:03d}.npz"
+        compute_elapsed_seconds = time.perf_counter() - t0
+        save_started = time.perf_counter()
         np.savez_compressed(out / name, **matrices)
         rows.append({**key, **features})
-        manifest.append({**key, "matrix_file": name, "gc_density": density,
-                         "pdc_order": int(order), "elapsed_seconds": time.perf_counter() - t0})
         pd.DataFrame(rows).to_csv(out / "windowed_features.csv", index=False)
+        save_seconds = time.perf_counter() - save_started
+        manifest.append({**key, "matrix_file": name, "gc_density": density,
+                         **audit, "pdc_order": int(order),
+                         "gc_seconds": gc_seconds, "pdc_seconds": pdc_seconds,
+                         "spectral_seconds": spectral_seconds, "roi_aggregation_seconds": roi_seconds,
+                         "save_seconds": save_seconds, "elapsed_seconds": compute_elapsed_seconds})
         pd.DataFrame(manifest).to_csv(out / "window_manifest.csv", index=False)
         print(f"Window {number} passed: 970 features, {manifest[-1]['elapsed_seconds']:.1f}s", flush=True)
+    timing = {
+        "load_preprocess_seconds": load_preprocess_seconds,
+        "spectral_seconds": sum(r["spectral_seconds"] for r in manifest),
+        "gc_seconds": sum(r["gc_seconds"] for r in manifest),
+        "pdc_seconds": sum(r["pdc_seconds"] for r in manifest),
+        "roi_aggregation_seconds": sum(r["roi_aggregation_seconds"] for r in manifest),
+        "save_seconds": sum(r["save_seconds"] for r in manifest),
+        "total_seconds": time.perf_counter() - run_started,
+        "per_window": [{k: r[k] for k in ["window_id", "spectral_seconds", "gc_seconds", "pdc_seconds",
+                                            "roi_aggregation_seconds", "save_seconds", "elapsed_seconds"]}
+                       for r in manifest],
+    }
+    (out / "timing_report.json").write_text(json.dumps(timing, indent=2), encoding="utf-8")
     metadata.update(status="passed", completed_windows=len(rows), n_features=970,
-                    total_seconds=sum(r["elapsed_seconds"] for r in manifest))
+                    total_seconds=sum(r["elapsed_seconds"] for r in manifest),
+                    timing_report="timing_report.json",
+                    gc_density_audit={"method": cfg.GC_THRESHOLD_METHOD,
+                                      "pvalue_selection": "minimum ssr_ftest p-value across lags 1..gc_max_lag before correction",
+                                      "note": "Descriptive audit only; no thresholding behavior changed."})
     report.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     print(f"Output: {out}", flush=True)
     return out

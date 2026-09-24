@@ -1,0 +1,85 @@
+{
+  "total_expected_trials": 675,
+  "passed": 0,
+  "failed": 0,
+  "missing": 674,
+  "incompatible": 1,
+  "percentage_complete": 0.0,
+  "all_675_complete": false,
+  "per_subject": {
+    "1": {
+      "incompatible": 1,
+      "missing": 44
+    },
+    "2": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "3": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "4": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "5": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "6": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "7": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "8": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "9": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "10": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "11": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "12": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "13": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "14": {
+      "incompatible": 0,
+      "missing": 45
+    },
+    "15": {
+      "incompatible": 0,
+      "missing": 45
+    }
+  },
+  "per_session": {
+    "1": {
+      "incompatible": 1,
+      "missing": 224
+    },
+    "2": {
+      "incompatible": 0,
+      "missing": 225
+    },
+    "3": {
+      "incompatible": 0,
+      "missing": 225
+    }
+  }
+}

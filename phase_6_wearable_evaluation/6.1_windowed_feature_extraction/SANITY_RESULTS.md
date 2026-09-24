@@ -18,3 +18,22 @@ Artifacts: [sanity_report.json](output/subject_01/session_20131027/trial_01/run_
 
 Boundary/tail and directed ROI tests: 2 passed. Persisted CSV/matrix checks passed.
 Baseline source hashes verified unchanged. No classifier or full-dataset run performed.
+
+## Pre-paper execution-readiness audit (2026-09-24)
+
+- Eleven synthetic unit/readiness tests passed in 0.864 seconds.
+- Verified boundary/direction behavior and a lightweight end-to-end single-trial
+  extraction retaining 970 features, matrices, labels, and unique-run semantics.
+- Verified completed-run skip, resumable failed/interrupted run, duplicate suppression,
+  incompatible provenance rejection, exact 675-trial enumeration, and extraction-free
+  dry-run/audit-only behavior.
+- Verified strict serial/worker artifact comparison on feature CSV, GC/PDC matrices,
+  stable manifest fields, metadata, and provenance at tolerance `1e-10`.
+- Parallel execution remains disabled until a current real-trial equivalence report passes.
+- Current-compatible dashboard: 0/675 passed, 0 failed, 674 missing, 1 incompatible.
+  The previous S01/S1/T1 sanity result predates timing/extractor provenance instrumentation;
+  it is retained for audit but is not accepted as current final extraction evidence.
+- Read-only GC audit reproduced every stored thresholded matrix exactly. Across the
+  three sanity windows, mean thresholded density is 0.904812. The active minimum-p-
+  across-lags then BH-FDR behavior was preserved; no scientific threshold changed.
+- No representative pilot or full extraction was run.
