@@ -65,6 +65,24 @@ def transform_target(X, calibration, evaluation):
     return transformed, mu, sigma
 
 
+def predict_target(pipe, X, calibration, evaluation, condition):
+    """X uses the same ordered feature columns as training; never refit any step."""
+    base.check(X.ndim == 2 and X.shape[1] == pipe.n_features_in_, 'Target feature shape mismatch')
+    base.check(condition in CONDITIONS, 'Unknown condition')
+    base.check((condition == '0') == (len(calibration) == 0), 'Condition/calibration mismatch')
+    transformed, mu, sigma = transform_target(X, calibration, evaluation)
+    if condition == '0':
+        # Preserve the Phase 6.2 raw-target prediction path exactly.
+        pred = pipe.predict(transformed)
+    else:
+        # Target z-scores already occupy the selector's input coordinate space.
+        # Applying the raw-training scaler here would normalize them twice.
+        selected = pipe['select'].transform(transformed)
+        base.check(np.isfinite(selected).all(), 'Non-finite selected target values')
+        pred = pipe['clf'].predict(selected)
+    return pred, mu, sigma
+
+
 def gain_metrics(acc, zero, full):
     denominator = full - zero
     return {'gain_pp': 100 * (acc - zero), 'gap_to_full_pp': 100 * (full - acc),
@@ -113,13 +131,9 @@ def evaluate(df, params, mode, datasets=None, conditions=CONDITIONS, observer=No
             cached = {}
             for condition in conditions:
                 cal, ev = plans[fold, condition]
-                transformed, mu, sigma = transform_target(X[test], cal, ev)
-                scaled = pipe['scaler'].transform(transformed)
-                selected = pipe['select'].transform(scaled)
-                base.check(np.isfinite(scaled).all() and np.isfinite(selected).all(), 'Non-finite pipeline transform')
+                pred, mu, sigma = predict_target(pipe, X[test], cal, ev, condition)
                 if observer is not None:
                     observer(name, subject, condition, pipe, train, test, cal, ev, mu, sigma)
-                pred = pipe.predict(transformed)
                 if condition == '0':
                     base.check(np.array_equal(pred, pipe.predict(X[test])), '0-min prediction differs from 6.2 pipeline')
                 cached[condition] = (pred, ev)
@@ -227,7 +241,7 @@ def main(argv=None):
     out.mkdir(parents=True)
     report = {'status': 'running', 'mode': mode, 'audit_only': args.audit_only,
               'datasets': datasets, 'conditions': conditions, 'ddof': 0, 'std_floor': EPS,
-              'training_subject_normalization': False, 'calibration_space': 'raw features, before train-fitted pipeline',
+              'training_subject_normalization': False, 'calibration_space': 'raw features -> target z-score -> fitted selector -> fitted SVM; bypass train scaler',
               'oracle_condition': 'full', 'reference_name': 'full-subject oracle/reference normalization',
               'base_script_sha256': base.sha(BASELINE), 'script_sha256': base.sha(__file__),
               'parameter_sha256': base.sha(base.TUNING), 'parameter_mapping': base.PARAM_SOURCE,

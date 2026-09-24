@@ -38,15 +38,28 @@ wall-clock onboarding time across breaks, discarded trial tails, or session gaps
 3. For target calibration >0, compute feature-wise `mu_cal` and population std
    (`ddof=0`) **only on raw calibration feature rows**. Replace `std < 1e-10` with 1.0.
    Transform evaluation features as `(x-mu_cal)/std_cal`. For 0, pass raw features unchanged.
-4. Apply the already fitted training pipeline to those evaluation features. Neither
-   scaler, selector nor SVM is fitted/updated on calibration or evaluation features.
+4. Prediction paths are explicitly different:
+   - Training: `raw -> train StandardScaler -> selector -> SVM`.
+   - Zero calibration: `raw target -> train StandardScaler -> selector -> SVM`.
+   - Limited/full calibration (1, 2, 5, 10, session1, full):
+     `raw target -> target z-score using calibration statistics -> fitted selector -> fitted SVM`.
+   Calibrated targets **never pass through the training scaler**, including finite-value
+   checks. The same fitted selector and SVM objects are reused without refitting;
+   scaler parameters also remain unchanged. Arrays retain the exact training feature
+   order from Phase 6.2's feature lists and their feature count is checked.
 5. Only after prediction, read evaluation labels for scoring. Selection accepts a
    metadata-only frame; statistics accept feature arrays without labels.
 
 For one calibration window, every feature std is zero, so the rule becomes `x-mu_cal`
 with denominator 1.0. This estimates an offset, not a reliable feature variance.
-Target-only z-scoring can put target features on a different scale from raw training
-features. This is the explicitly requested comparison; improvement is **not guaranteed**.
+Coordinate-space assumption: target calibration statistics substitute for the
+training scaler at target inference; the fitted selector/SVM receive target z-scores
+in the same feature order as standardized training features. This does not assume
+that target and training distributions become equal, especially for one-window
+(offset-only) calibration; improvement is **not guaranteed**. Phase 6.2 remains the
+reference for training and zero calibration. Earlier 6.3 results used an additional
+training-scaler transform after target z-scoring; those historical outputs are left
+untouched and do not represent this corrected calibrated prediction path.
 The full reference is not an upper bound and is not a reproduction of Phase 5's
 normalization (which also normalized training subjects and used pandas sample std).
 
