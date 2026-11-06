@@ -62,8 +62,6 @@ The SEED dataset is **not included** in this repository. It is distributed by th
 
 ## 🎯 Konteks & Tujuan Penelitian (Ringkasan Bab 1–3)
 
-> dalam pipeline ini, agar setiap keputusan teknis selalu selaras dengan tujuan penelitian.**
-
 ### Latar Belakang & Masalah yang Ingin Dipecahkan
 
 Penelitian ini lahir dari sebuah keterbatasan mendasar pada metode deteksi emosi EEG yang
@@ -104,17 +102,10 @@ sebagai fitur: *in/out-degree*, *in/out-strength*, *density*, *hub channel*, dsb
 3. **Validasi lintas subjek** — Uji kemampuan generalisasi model menggunakan
    *Leave-One-Subject-Out Cross-Validation (LOSO-CV)*.
 
-### Target Performa yang Ingin Dicapai
-
-| Skenario | Target Akurasi |
-|---|---|
-| Fitur konektivitas saja (GC atau PDC) | **70–80%** |
-| Fitur gabungan (GC + PDC + spektral) | **75–85%** |
-| Validasi lintas dataset (SEED→DEAP) | **≥ 65%** |
 
 ### Detail Dataset & Setup Eksperimen
 
-- **Dataset:** SEED (Shanghai Jiao Tong University) — dataset EEG emosi *open-access*.
+- **Dataset:** SEED (Shanghai Jiao Tong University) — dataset EEG emosi tersedia atas permintaan dengan perjanjian lisensi.
 - **Subjek:** 15 subjek (7 pria, 8 wanita), **3 sesi** perekaman di hari berbeda.
 - **Stimulus:** 15 klip video emosional per sesi → label: `negative`, `neutral`, `positive`.
 - **EEG:** 62 kanal, di-*downsample* ke **100 Hz**, *bandpass filter* 1–45 Hz.
@@ -132,10 +123,7 @@ Setiap CSV output dari **Phase 1** memiliki dua kolom label emosi dengan makna b
 | `class_label` | Teks: `'negative'`, `'neutral'`, `'positive'` | **Grouping & plotting** di Phase 2–3 |
 | `class` | Numerik: `0`, `1`, `2` | **Input classifier** di Phase 4–6 |
 
-> ⚠️ **Penting untuk agent yang menulis kode:** Selalu gunakan `class_label` untuk
-> operasi `groupby`, `reindex`, dan visualisasi. Gunakan `class` (numerik) hanya sebagai
-> target label untuk training model ML. **Jangan pernah mengubah file CSV secara langsung —
-> selalu perbaiki kode yang membacanya.**
+> ⚠️ **Catatan: gunakan class_label untuk grouping dan visualisasi, dan class (numerik) hanya sebagai target model.**
 
 ---
 
