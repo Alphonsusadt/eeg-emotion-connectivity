@@ -1,3 +1,58 @@
+# EEG Emotion Recognition with Effective Connectivity (GC & PDC)
+
+**Bachelor's thesis, Biomedical Engineering, Universitas Gadjah Mada (2026)**
+*Effective connectivity analysis of EEG using Granger Causality and Partial Directed Coherence for emotion classification on the SEED dataset*
+
+## Summary
+
+Most EEG emotion classifiers use spectral features such as Power Spectral Density (PSD) and Differential Entropy (DE). These only measure activity at each channel, not how brain regions influence each other. This project tests whether **directed effective connectivity** adds useful information, and whether it generalises to subjects the model has never seen.
+
+| | |
+|---|---|
+| **Dataset** | SEED: 15 subjects, 62 EEG channels, 3 classes (negative, neutral, positive) |
+| **Connectivity** | Granger Causality (time domain, FDR-corrected) and Partial Directed Coherence (frequency domain, 6 bands, MVAR model) |
+| **Features** | 62×62 connectivity matrices summarised as directed graph metrics, aggregated into 6 regions of interest, and combined with spectral features |
+| **Classifiers** | LDA, SVM, Random Forest, XGBoost, and ensembles |
+| **Validation** | StratifiedGroupKFold (5-fold) and Leave-One-Subject-Out (LOSO) |
+
+## Key results
+
+| Feature set | Accuracy |
+|---|---|
+| Connectivity only (GC + PDC) | 65.19% |
+| **GC + PDC + spectral, 5-fold** | **75.56%** |
+| **GC + PDC + spectral, LOSO** | **75.70%** |
+
+- Only GC total strength differed significantly between emotion classes (Kruskal-Wallis, p < 0.001). None of the six PDC bands did.
+- GC and PDC were statistically equivalent in 11 of 12 models, but both were weaker than spectral features on their own.
+- **Conclusion:** effective connectivity works best as a *complement* to spectral features, not a replacement. The combined model kept its accuracy under strict cross-subject (LOSO) validation.
+
+## Pipeline
+
+| Step | Folder |
+|---|---|
+| Preprocessing | `00_preprocessing/` |
+| Granger Causality | `01_granger_causality/` |
+| Partial Directed Coherence | `02_pdc/` |
+| Data structuring | `phase_1_data_structuring/` |
+| Statistical tests | `phase_2_statistics/` |
+| Feature engineering and selection | `phase_3_feature_engineering/` |
+| Classification (5-fold) | `phase_4_classification/` |
+| Leave-One-Subject-Out validation | `phase_5_loso/` |
+| Additional analyses | `phase_6_wearable_evaluation/`, `phase_7_deep_learning/` |
+
+Run the steps in the order above. The GC step is the slowest (about 20 hours for all trials).
+
+## Data
+
+The SEED dataset is **not included** in this repository. It is distributed by the BCMI Laboratory, Shanghai Jiao Tong University, under a license agreement. Request access from the dataset owners and place the files according to `config.py`.
+
+---
+
+*The detailed documentation below is in Indonesian.*
+
+---
+
 # Pipeline Lengkap: GC + PDC untuk Klasifikasi Emosi EEG (SEED Dataset)
 
 > **Skripsi:** Perbandingan Granger Causality (GC) dan Partial Directed Coherence (PDC)
@@ -7,7 +62,6 @@
 
 ## 🎯 Konteks & Tujuan Penelitian (Ringkasan Bab 1–3)
 
-> **Catatan ini ditujukan untuk siapapun (termasuk AI agent) yang akan menulis kode
 > dalam pipeline ini, agar setiap keputusan teknis selalu selaras dengan tujuan penelitian.**
 
 ### Latar Belakang & Masalah yang Ingin Dipecahkan
